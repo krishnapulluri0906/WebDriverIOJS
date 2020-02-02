@@ -1,4 +1,17 @@
-exports.config = {
+const yargs = require('yargs');
+const parseCmdArgs = () => {
+    return yargs.argv;
+};
+
+const getCmdArgs = () => parseCmdArgs();
+const getRunOnSauce = () => getCmdArgs()['runOnSauce'] || false;
+const getBrowser = () => getCmdArgs()['browserName'] || 'chrome';
+const getOs = () => getCmdArgs()['os'] || 'windows';
+const getThreadCount = () => getCmdArgs()['threadCount'] || 1;
+
+
+var config = {
+	skipSeleniumInstall: true,
     //
     // ====================
     // Runner Configuration
@@ -124,7 +137,33 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-    reporters: ['spec','junit',['allure', {outputDir: 'allure-results'}]],
+            reporters: ['spec',['junit',{outputDir:'reports'}],['allure', {outputDir: 'allure-results'}]],
+   
+  //reporters: ['multiple-cucumber-html', 'junit'],
+    reporterOptions: {
+        htmlReporter: {
+            jsonFolder: './reports/cucumber-json',
+            reportFolder: './reports/cucumber-html',
+            removeFolders: true,
+            openReportInBrowser: true,
+            disableLog: true,
+            pageTitle: 'webdriverio-cucumber',
+            displayDuration: true,
+            customData: {
+                title: 'Run info',
+                data: [
+                    {label: 'Environment', value: 'local'},
+                    {label: 'Project', value: 'WebDriverio-cucumber'},
+                    {label: 'Release', value: '1.0.0'},
+                    {label: 'Cycle', value: 'Sprint-0'}
+                ]
+            }
+        },
+        junit: {
+            outputDir: './reports/junit'
+        }
+    },
+   
  //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -258,3 +297,5 @@ exports.config = {
     //onReload: function(oldSessionId, newSessionId) {
     //}
 }
+
+exports.config = config;
