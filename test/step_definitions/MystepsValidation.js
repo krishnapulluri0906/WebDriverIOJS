@@ -1,9 +1,7 @@
 const { Before, Given, When, Then } = require('cucumber');
 
 Given(/^I am webdriver page$/, function () {
-  //  WebdriverIoHomePage.open();
    browser.url("https://google.com");
-   // multipleCucumberHtmlReporter.attach(browser.saveScreenshot(), 'image/png');
 });
 
 When(/^get the title$/, function () {
