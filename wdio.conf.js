@@ -1,3 +1,6 @@
+const {generate} = require('multiple-cucumber-html-reporter');
+const {removeSync} = require('fs-extra');
+const chai = require('chai');
 const yargs = require('yargs');
 const parseCmdArgs = () => {
     return yargs.argv;
@@ -137,13 +140,15 @@ var config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-            reporters: ['spec',['junit',{outputDir:'reports'}],['allure', {outputDir: 'allure-results'}]],
+ //  reporters: ['spec',['junit',{outputDir:'reports'}],['allure', {outputDir: 'allure-results'}]],
    
-  //reporters: ['multiple-cucumber-html', 'junit'],
+    reporters:[['cucumberjs-json',{
+        jsonFolder:'./reports/cucumber-json'}]],
    
  //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
+        require:['@babel/register'],
         require: ['./test/step_definitions/**/*.js'],        // <string[]> (file/dir) require files before executing features
         backtrace: false,   // <boolean> show full backtrace for errors
         requireModule: [],  // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -175,6 +180,11 @@ var config = {
      */
     // onPrepare: function (config, capabilities) {
     // },
+     onPrepare:() =>{
+     removeSync('./reports/cucumber-json/');
+     removeSync('./reports/cucumber-html/');
+     },
+
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
      * to manipulate configurations depending on the capability or spec.
@@ -266,6 +276,13 @@ var config = {
      */
     // onComplete: function(exitCode, config, capabilities, results) {
     // },
+    onComplete: () => ({
+    // generate(browserConfig.getReportOptions);
+    jsonDir:'./reports/cucumber-json/',
+    reportPath:'./reports/cucumber-html/',
+    openReportInBrowser: true,
+   // disableLog = true
+    })
     /**
     * Gets executed when a refresh happens.
     * @param {String} oldSessionId session ID of the old session
