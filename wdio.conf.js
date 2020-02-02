@@ -140,29 +140,6 @@ var config = {
             reporters: ['spec',['junit',{outputDir:'reports'}],['allure', {outputDir: 'allure-results'}]],
    
   //reporters: ['multiple-cucumber-html', 'junit'],
-    reporterOptions: {
-        htmlReporter: {
-            jsonFolder: './reports/cucumber-json',
-            reportFolder: './reports/cucumber-html',
-            removeFolders: true,
-            openReportInBrowser: true,
-            disableLog: true,
-            pageTitle: 'webdriverio-cucumber',
-            displayDuration: true,
-            customData: {
-                title: 'Run info',
-                data: [
-                    {label: 'Environment', value: 'local'},
-                    {label: 'Project', value: 'WebDriverio-cucumber'},
-                    {label: 'Release', value: '1.0.0'},
-                    {label: 'Cycle', value: 'Sprint-0'}
-                ]
-            }
-        },
-        junit: {
-            outputDir: './reports/junit'
-        }
-    },
    
  //
     // If you are using Cucumber you need to specify the location of your step definitions.
