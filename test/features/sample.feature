@@ -1,6 +1,6 @@
-Feature: validation
+Feature: Google home page scenario
 
-  Scenario: validation
+  Scenario: Google home page scenario
     Given I am webdriver page
     When get the title
     Then title should be matched

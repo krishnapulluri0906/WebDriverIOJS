@@ -14,7 +14,7 @@ const getThreadCount = () => getCmdArgs()['threadCount'] || 1;
 
 
 var config = {
-	skipSeleniumInstall: true,
+	skipSeleniumInstall: false,
     //
     // ====================
     // Runner Configuration
@@ -282,7 +282,7 @@ var config = {
     reportPath:'./reports/cucumber-html/',
     openReportInBrowser: true,
    // disableLog = true
-    })
+    }),
     /**
     * Gets executed when a refresh happens.
     * @param {String} oldSessionId session ID of the old session
@@ -290,6 +290,6 @@ var config = {
     */
     //onReload: function(oldSessionId, newSessionId) {
     //}
-}
+};
 
 exports.config = config;
